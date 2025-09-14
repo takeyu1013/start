@@ -1,5 +1,4 @@
 // src/routes/index.tsx
-import * as fs from "node:fs";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
@@ -7,7 +6,9 @@ const filePath = "count.txt";
 
 async function readCount() {
 	return parseInt(
-		await fs.promises.readFile(filePath, "utf-8").catch(() => "0"),
+		await Bun.file(filePath)
+			.text()
+			.catch(() => "0"),
 		10,
 	);
 }
@@ -22,7 +23,7 @@ const updateCount = createServerFn({ method: "POST" })
 	.validator((d: number) => d)
 	.handler(async ({ data }) => {
 		const count = await readCount();
-		await fs.promises.writeFile(filePath, `${count + data}`);
+		await Bun.write(filePath, `${count + data}`);
 	});
 
 export const Route = createFileRoute("/")({
