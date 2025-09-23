@@ -8,20 +8,13 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as AnotherPageRouteImport } from './routes/anotherPage'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoStartServerFuncsRouteImport } from './routes/demo.start.server-funcs'
-import { Route as DemoStartApiRequestRouteImport } from './routes/demo.start.api-request'
-import { ServerRoute as ApiDemoNamesServerRouteImport } from './routes/api.demo-names'
 
-const rootServerRouteImport = createServerRootRoute()
-
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const AnotherPageRoute = AnotherPageRouteImport.update({
+  id: '/anotherPage',
+  path: '/anotherPage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -29,93 +22,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
-  id: '/demo/start/server-funcs',
-  path: '/demo/start/server-funcs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartApiRequestRoute = DemoStartApiRequestRouteImport.update({
-  id: '/demo/start/api-request',
-  path: '/demo/start/api-request',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiDemoNamesServerRoute = ApiDemoNamesServerRouteImport.update({
-  id: '/api/demo-names',
-  path: '/api/demo-names',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/anotherPage': typeof AnotherPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/anotherPage': typeof AnotherPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/anotherPage': typeof AnotherPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
+  fullPaths: '/' | '/anotherPage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/demo/start/api-request' | '/demo/start/server-funcs'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
+  to: '/' | '/anotherPage'
+  id: '__root__' | '/' | '/anotherPage'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
-  DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
-}
-export interface FileServerRoutesByFullPath {
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/demo-names': typeof ApiDemoNamesServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/demo-names'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/demo-names'
-  id: '__root__' | '/api/demo-names'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiDemoNamesServerRoute: typeof ApiDemoNamesServerRoute
+  AnotherPageRoute: typeof AnotherPageRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/anotherPage': {
+      id: '/anotherPage'
+      path: '/anotherPage'
+      fullPath: '/anotherPage'
+      preLoaderRoute: typeof AnotherPageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -125,46 +65,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/start/server-funcs': {
-      id: '/demo/start/server-funcs'
-      path: '/demo/start/server-funcs'
-      fullPath: '/demo/start/server-funcs'
-      preLoaderRoute: typeof DemoStartServerFuncsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/api-request': {
-      id: '/demo/start/api-request'
-      path: '/demo/start/api-request'
-      fullPath: '/demo/start/api-request'
-      preLoaderRoute: typeof DemoStartApiRequestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
-}
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/demo-names': {
-      id: '/api/demo-names'
-      path: '/api/demo-names'
-      fullPath: '/api/demo-names'
-      preLoaderRoute: typeof ApiDemoNamesServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  DemoStartApiRequestRoute: DemoStartApiRequestRoute,
-  DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
+  AnotherPageRoute: AnotherPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiDemoNamesServerRoute: ApiDemoNamesServerRoute,
-}
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()
