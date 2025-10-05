@@ -1,4 +1,11 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
   "editor.formatOnSave": true,
+  "[json][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "[toml]": { "editor.defaultFormatter": "tamasfe.even-better-toml" }
 }

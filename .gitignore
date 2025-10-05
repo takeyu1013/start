@@ -1,26 +1,36 @@
+# dependencies (bun install)
 node_modules
 
-!.env
+# output
+out
+dist
+*.tgz
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# dotenv environment variable files
 .env
+.env.development.local
+.env.test.local
+.env.production.local
 .env.local
-.DS_Store
+
+# caches
+.eslintcache
 .cache
-.vercel
-.output
-.nitro
+*.tsbuildinfo
+
+# IntelliJ based IDEs
+.idea
+
+# Finder (MacOS) folder config
+.DS_Store
+
 .tanstack
-
-/build/
-/api/
-/server/build
-/public/build
-/dist/
-
-# Sentry Config File
-.env.sentry-build-plugin
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-
-app.config.timestamp_*.js
