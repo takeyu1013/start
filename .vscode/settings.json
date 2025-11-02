@@ -4,7 +4,7 @@
     "source.fixAll.biome": "explicit"
   },
   "editor.formatOnSave": true,
-  "[json][typescript][typescriptreact]": {
+	"[json][jsonc][typescript][typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[toml]": { "editor.defaultFormatter": "tamasfe.even-better-toml" }
