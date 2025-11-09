@@ -41,11 +41,11 @@ function RootComponent() {
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 	return (
-		<html lang="ja">
+		<html className="light" data-theme="light" lang="ja">
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="bg-background text-foreground">
 				{children}
 				<Scripts />
 			</body>
