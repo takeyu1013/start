@@ -2,13 +2,15 @@ import { ConvexQueryClient } from "@convex-dev/react-query";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
-import { ConvexProvider } from "convex/react";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
-	const convexQueryClient = new ConvexQueryClient(
-		import.meta.env.VITE_CONVEX_URL ?? "",
-	);
+	const CONVEX_URL = import.meta.env.VITE_CONVEX_URL ?? "";
+	const convexQueryClient = new ConvexQueryClient(CONVEX_URL);
+	const convexClient = new ConvexReactClient(CONVEX_URL, {
+		unsavedChangesWarning: false,
+	});
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
@@ -21,7 +23,7 @@ export function getRouter() {
 
 	const router = routerWithQueryClient(
 		createRouter({
-			context: { queryClient },
+			context: { queryClient, convexClient, convexQueryClient },
 			defaultPreloadStaleTime: 0,
 			routeTree,
 			scrollRestoration: true,

@@ -9,6 +9,9 @@ export default defineConfig({
 	server: {
 		port: 3000,
 	},
+	optimizeDeps: {
+		include: ["@clerk/tanstack-react-start", "cookie"],
+	},
 	plugins: [
 		nitroV2Plugin(),
 		tailwindcss(),

@@ -1,7 +1,20 @@
+import {
+	SignedIn,
+	SignedOut,
+	SignInButton,
+	UserButton,
+} from "@clerk/tanstack-react-start";
 import { convexQuery } from "@convex-dev/react-query";
-import { Button, Form, Input, Label, TextField } from "@heroui/react";
+import {
+	Link as Anchor,
+	Button,
+	Form,
+	Input,
+	Label,
+	TextField,
+} from "@heroui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { api } from "../../convex/_generated/api";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +40,19 @@ function Home() {
 				</TextField>
 				<Button type="submit">Submit</Button>
 			</Form>
+			<Anchor asChild>
+				<Link to="/protected">protected</Link>
+			</Anchor>
+			<div>
+				<SignedIn>
+					<p>You are signed in</p>
+					<UserButton />
+				</SignedIn>
+				<SignedOut>
+					<p>You are signed out</p>
+					<SignInButton mode="modal" />
+				</SignedOut>
+			</div>
 		</main>
 	);
 }
