@@ -6,6 +6,7 @@
 		"build": "vite build"
 	},
 	"dependencies": {
+		"@clerk/tanstack-react-start": "^0.27.1",
 		"@convex-dev/react-query": "^0.0.0-alpha.11",
 		"@heroui/react": "^3.0.0-beta.1",
 		"@heroui/styles": "^3.0.0-beta.1",
@@ -19,6 +20,7 @@
 		"convex": "^1.29.1",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
+		"srvx": "^0.9.6",
 		"tailwindcss": "^4.1.16",
 		"vite": "^7.1.12"
 	},
