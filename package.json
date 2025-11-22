@@ -32,5 +32,8 @@
 		"@types/react-dom": "^19.2.3",
 		"typescript": "^5.9.3",
 		"vite-tsconfig-paths": "^5.1.4"
+	},
+	"overrides": {
+		"srvx": "0.8.15"
 	}
 }
