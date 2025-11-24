@@ -1,4 +1,14 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"files": { "includes": ["**", "!**/src/routeTree.gen.ts"] }
+	"files": { "includes": ["**", "!**/src/routeTree.gen.ts"] },
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "error"
+				}
+			}
+		}
+	}
 }
