@@ -31,7 +31,9 @@ function Layout() {
 									<Label>Help</Label>
 								</Dropdown.Item>
 								<Dropdown.Item>
-									<Label>Log in</Label>
+									<TanStackLink className="block w-full" to="/log-in">
+										Log in
+									</TanStackLink>
 								</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown.Popover>

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
 import { Route as LayoutSignUpRouteImport } from './routes/_layout.sign-up'
+import { Route as LayoutLogInRouteImport } from './routes/_layout.log-in'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -27,27 +28,40 @@ const LayoutSignUpRoute = LayoutSignUpRouteImport.update({
   path: '/sign-up',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutLogInRoute = LayoutLogInRouteImport.update({
+  id: '/log-in',
+  path: '/log-in',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/log-in': typeof LayoutLogInRoute
   '/sign-up': typeof LayoutSignUpRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesByTo {
+  '/log-in': typeof LayoutLogInRoute
   '/sign-up': typeof LayoutSignUpRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
+  '/_layout/log-in': typeof LayoutLogInRoute
   '/_layout/sign-up': typeof LayoutSignUpRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/sign-up' | '/'
+  fullPaths: '/log-in' | '/sign-up' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/sign-up' | '/'
-  id: '__root__' | '/_layout' | '/_layout/sign-up' | '/_layout/'
+  to: '/log-in' | '/sign-up' | '/'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/_layout/log-in'
+    | '/_layout/sign-up'
+    | '/_layout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,15 +91,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSignUpRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/log-in': {
+      id: '/_layout/log-in'
+      path: '/log-in'
+      fullPath: '/log-in'
+      preLoaderRoute: typeof LayoutLogInRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
+  LayoutLogInRoute: typeof LayoutLogInRoute
   LayoutSignUpRoute: typeof LayoutSignUpRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutLogInRoute: LayoutLogInRoute,
   LayoutSignUpRoute: LayoutSignUpRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
