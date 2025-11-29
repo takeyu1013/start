@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_layout/log-in")({
 
 function RouteComponent() {
 	const navigate = useNavigate();
-	const { isLoaded, signIn } = useSignIn();
+	const { isLoaded, signIn, setActive } = useSignIn();
 	const { Field, handleSubmit, Subscribe } = useForm({
 		defaultValues: {
 			email: "",
@@ -20,10 +20,14 @@ function RouteComponent() {
 				return;
 			}
 			const { email, password } = value;
-			const { status } = await signIn.create({ identifier: email, password });
+			const { createdSessionId, status } = await signIn.create({
+				identifier: email,
+				password,
+			});
 			if (!status || status !== "complete") {
 				return;
 			}
+			await setActive({ session: createdSessionId });
 			navigate({ to: "/" });
 		},
 	});
