@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut, UserButton } from "@clerk/tanstack-react-start";
 import { Link } from "@heroui/react";
 import { createFileRoute, Link as TanStackLink } from "@tanstack/react-router";
 
@@ -14,9 +15,14 @@ function Home() {
 			<p className="text-balance text-center text-muted">
 				This is the home page for the sample application.
 			</p>
-			<Link>
-				<TanStackLink to="/sign-up">Sign up now!</TanStackLink>
-			</Link>
+			<SignedIn>
+				<UserButton />
+			</SignedIn>
+			<SignedOut>
+				<Link>
+					<TanStackLink to="/sign-up">Sign up now!</TanStackLink>
+				</Link>
+			</SignedOut>
 		</div>
 	);
 }

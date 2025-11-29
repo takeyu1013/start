@@ -1,19 +1,30 @@
+import { useSignIn } from "@clerk/tanstack-react-start";
 import { Button, Form, Input, Label, TextField } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_layout/log-in")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
+	const navigate = useNavigate();
+	const { isLoaded, signIn } = useSignIn();
 	const { Field, handleSubmit, Subscribe } = useForm({
 		defaultValues: {
 			email: "",
 			password: "",
 		},
 		onSubmit: async ({ value }) => {
-			console.log(value);
+			if (!isLoaded) {
+				return;
+			}
+			const { email, password } = value;
+			const { status } = await signIn.create({ identifier: email, password });
+			if (!status || status !== "complete") {
+				return;
+			}
+			navigate({ to: "/" });
 		},
 	});
 	return (
