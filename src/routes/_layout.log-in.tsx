@@ -1,46 +1,38 @@
-import { useSignIn } from "@clerk/tanstack-react-start";
 import { Button, Form, Input, Label, TextField } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 
 export const Route = createFileRoute("/_layout/log-in")({
 	component: RouteComponent,
 });
 
+export const handleForm = createServerFn({ method: "POST" })
+	.inputValidator((data: unknown) => {
+		if (!(data instanceof FormData)) {
+			throw new Error("Invalid form data");
+		}
+		return data;
+	})
+	.handler(async ({ data }) => {
+		console.log(data);
+		return redirect({ to: "/" });
+	});
+
 function RouteComponent() {
-	const navigate = useNavigate();
-	const { isLoaded, signIn, setActive } = useSignIn();
-	const { Field, handleSubmit, Subscribe } = useForm({
+	const { Field, Subscribe } = useForm({
 		defaultValues: {
 			email: "",
 			password: "",
-		},
-		onSubmit: async ({ value }) => {
-			if (!isLoaded) {
-				return;
-			}
-			const { email, password } = value;
-			const { createdSessionId, status } = await signIn.create({
-				identifier: email,
-				password,
-			});
-			if (!status || status !== "complete") {
-				return;
-			}
-			await setActive({ session: createdSessionId });
-			navigate({ to: "/" });
 		},
 	});
 	return (
 		<section className="flex flex-col gap-y-4">
 			<h1 className="mx-auto text-2xl">Log in</h1>
 			<Form
+				action={handleForm.url}
 				className="flex flex-col gap-y-4"
-				onSubmit={(event) => {
-					event.preventDefault();
-					event.stopPropagation();
-					handleSubmit();
-				}}
+				method="post"
 			>
 				<Field name="email">
 					{({ handleChange, name, state: { value } }) => (
