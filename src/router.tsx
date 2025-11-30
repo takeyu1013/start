@@ -7,10 +7,10 @@ import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
 	const CONVEX_URL = import.meta.env.VITE_CONVEX_URL ?? "";
-	const convexQueryClient = new ConvexQueryClient(CONVEX_URL);
 	const convexClient = new ConvexReactClient(CONVEX_URL, {
 		unsavedChangesWarning: false,
 	});
+	const convexQueryClient = new ConvexQueryClient(convexClient);
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
