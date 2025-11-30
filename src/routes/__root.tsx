@@ -11,37 +11,16 @@ import {
 	Scripts,
 	useRouteContext,
 } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import type { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import type { ReactNode } from "react";
 import appCss from "../styles/app.css?url";
-
-const fetchClerkAuth = createServerFn({ method: "GET" }).handler(async () => {
-	const session = await auth();
-	const token = await session.getToken({ template: "convex" });
-
-	return {
-		userId: session.userId,
-		token,
-	};
-});
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 	convexClient: ConvexReactClient;
 	convexQueryClient: ConvexQueryClient;
 }>()({
-	beforeLoad: async ({ context: { convexQueryClient } }) => {
-		const { token, userId } = await fetchClerkAuth();
-		if (token) {
-			convexQueryClient.serverHttpClient?.setAuth(token);
-		}
-		return {
-			userId,
-			token,
-		};
-	},
 	component: RootComponent,
 	head: () => ({
 		links: [{ rel: "stylesheet", href: appCss }],
