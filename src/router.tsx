@@ -25,6 +25,7 @@ export function getRouter() {
 		createRouter({
 			context: { queryClient, convexClient, convexQueryClient },
 			defaultPreloadStaleTime: 0,
+			defaultNotFoundComponent: () => <p>Not Found</p>,
 			routeTree,
 			scrollRestoration: true,
 			Wrap: ({ children }) => (

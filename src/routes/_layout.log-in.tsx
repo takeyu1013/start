@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_layout/log-in")({
 	component: RouteComponent,
 });
 
-export const handleForm = createServerFn({ method: "POST" })
+const handleForm = createServerFn({ method: "POST" })
 	.inputValidator((data: unknown) => {
 		if (!(data instanceof FormData)) {
 			throw new Error("Invalid form data");
