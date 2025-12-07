@@ -6,9 +6,6 @@ import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-	optimizeDeps: {
-		include: ["@clerk/tanstack-react-start", "cookie"],
-	},
 	plugins: [
 		nitro({
 			vercel: {
