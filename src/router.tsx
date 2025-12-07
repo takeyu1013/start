@@ -7,9 +7,7 @@ import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
 	const CONVEX_URL = import.meta.env.VITE_CONVEX_URL ?? "";
-	const convexClient = new ConvexReactClient(CONVEX_URL, {
-		unsavedChangesWarning: false,
-	});
+	const convexClient = new ConvexReactClient(CONVEX_URL);
 	const convexQueryClient = new ConvexQueryClient(convexClient);
 	const queryClient = new QueryClient({
 		defaultOptions: {
@@ -20,10 +18,10 @@ export function getRouter() {
 		},
 	});
 	convexQueryClient.connect(queryClient);
-
 	const router = routerWithQueryClient(
 		createRouter({
 			context: { queryClient, convexClient, convexQueryClient },
+			defaultPreload: "intent",
 			defaultPreloadStaleTime: 0,
 			defaultNotFoundComponent: () => <p>Not Found</p>,
 			routeTree,
@@ -36,6 +34,5 @@ export function getRouter() {
 		}),
 		queryClient,
 	);
-
 	return router;
 }
