@@ -6,23 +6,8 @@ import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-	optimizeDeps: {
-		include: ["cookie"],
-	},
-	plugins: [
-		nitro({
-			vercel: {
-				functions: {
-					runtime: "bun1.x",
-				},
-			},
-		}),
-		tailwindcss(),
-		tsConfigPaths(),
-		tanstackStart(),
-		viteReact(),
-	],
-	server: {
-		port: 3000,
-	},
+  server: {
+    port: 3000,
+  },
+  plugins: [nitro(), tailwindcss(), tanstackStart(), tsConfigPaths(), viteReact()],
 });
