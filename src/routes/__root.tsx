@@ -5,7 +5,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getAuth } from "@workos/authkit-tanstack-react-start";
-import { ConvexReactClient } from "convex/react";
 
 import appCss from "../styles/app.css?url";
 
