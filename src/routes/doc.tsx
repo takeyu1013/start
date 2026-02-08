@@ -8,11 +8,5 @@ export const Route = createFileRoute("/doc")({
 });
 
 function Page() {
-  return (
-    <ApiReferenceReact
-      configuration={{
-        url: "/spec",
-      }}
-    />
-  );
+  return <ApiReferenceReact configuration={{ url: "/spec" }} />;
 }
