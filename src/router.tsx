@@ -8,7 +8,6 @@ import {
   useAuth,
 } from "@workos/authkit-tanstack-react-start/client";
 import { ConvexProviderWithAuth } from "convex/react";
-import { useCallback, useMemo } from "react";
 
 import { routeTree } from "./routeTree.gen";
 
@@ -49,22 +48,15 @@ export function getRouter() {
 function useAuthFromWorkOS() {
   const { loading, user } = useAuth();
   const { accessToken, getAccessToken } = useAccessToken();
-  const fetchAccessToken = useCallback(
-    async ({ forceRefreshToken }: { forceRefreshToken: boolean }) => {
-      if (!accessToken || forceRefreshToken) {
-        return (await getAccessToken()) ?? null;
-      }
-      console.log(accessToken);
-      return accessToken;
-    },
-    [accessToken, getAccessToken],
-  );
-  return useMemo(
-    () => ({
-      isLoading: loading,
-      isAuthenticated: !!user,
-      fetchAccessToken,
-    }),
-    [loading, user, fetchAccessToken],
-  );
+  const fetchAccessToken = async ({ forceRefreshToken }: { forceRefreshToken: boolean }) => {
+    if (!accessToken || forceRefreshToken) {
+      return (await getAccessToken()) ?? null;
+    }
+    return accessToken;
+  };
+  return {
+    isLoading: loading,
+    isAuthenticated: !!user,
+    fetchAccessToken,
+  };
 }
