@@ -9,15 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpecRouteImport } from './routes/spec'
 import { Route as SignOutRouteImport } from './routes/sign-out'
+import { Route as DocRouteImport } from './routes/doc'
 import { Route as CallbackRouteImport } from './routes/callback'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedAuthenticatedRouteImport } from './routes/_authenticated/authenticated'
 
+const SpecRoute = SpecRouteImport.update({
+  id: '/spec',
+  path: '/spec',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignOutRoute = SignOutRouteImport.update({
   id: '/sign-out',
   path: '/sign-out',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocRoute = DocRouteImport.update({
+  id: '/doc',
+  path: '/doc',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CallbackRoute = CallbackRouteImport.update({
@@ -44,13 +56,17 @@ const AuthenticatedAuthenticatedRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
+  '/doc': typeof DocRoute
   '/sign-out': typeof SignOutRoute
+  '/spec': typeof SpecRoute
   '/authenticated': typeof AuthenticatedAuthenticatedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
+  '/doc': typeof DocRoute
   '/sign-out': typeof SignOutRoute
+  '/spec': typeof SpecRoute
   '/authenticated': typeof AuthenticatedAuthenticatedRoute
 }
 export interface FileRoutesById {
@@ -58,20 +74,30 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/callback': typeof CallbackRoute
+  '/doc': typeof DocRoute
   '/sign-out': typeof SignOutRoute
+  '/spec': typeof SpecRoute
   '/_authenticated/authenticated': typeof AuthenticatedAuthenticatedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/callback' | '/sign-out' | '/authenticated'
+  fullPaths:
+    | '/'
+    | '/callback'
+    | '/doc'
+    | '/sign-out'
+    | '/spec'
+    | '/authenticated'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/callback' | '/sign-out' | '/authenticated'
+  to: '/' | '/callback' | '/doc' | '/sign-out' | '/spec' | '/authenticated'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/callback'
+    | '/doc'
     | '/sign-out'
+    | '/spec'
     | '/_authenticated/authenticated'
   fileRoutesById: FileRoutesById
 }
@@ -79,16 +105,32 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   CallbackRoute: typeof CallbackRoute
+  DocRoute: typeof DocRoute
   SignOutRoute: typeof SignOutRoute
+  SpecRoute: typeof SpecRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/spec': {
+      id: '/spec'
+      path: '/spec'
+      fullPath: '/spec'
+      preLoaderRoute: typeof SpecRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-out': {
       id: '/sign-out'
       path: '/sign-out'
       fullPath: '/sign-out'
       preLoaderRoute: typeof SignOutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doc': {
+      id: '/doc'
+      path: '/doc'
+      fullPath: '/doc'
+      preLoaderRoute: typeof DocRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/callback': {
@@ -138,7 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   CallbackRoute: CallbackRoute,
+  DocRoute: DocRoute,
   SignOutRoute: SignOutRoute,
+  SpecRoute: SpecRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

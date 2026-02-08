@@ -54,6 +54,7 @@ function useAuthFromWorkOS() {
       if (!accessToken || forceRefreshToken) {
         return (await getAccessToken()) ?? null;
       }
+      console.log(accessToken);
       return accessToken;
     },
     [accessToken, getAccessToken],
