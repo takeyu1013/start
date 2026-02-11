@@ -13,9 +13,7 @@ import { Route as SpecRouteImport } from './routes/spec'
 import { Route as SignOutRouteImport } from './routes/sign-out'
 import { Route as DocRouteImport } from './routes/doc'
 import { Route as CallbackRouteImport } from './routes/callback'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedAuthenticatedRouteImport } from './routes/_authenticated/authenticated'
 
 const SpecRoute = SpecRouteImport.update({
   id: '/spec',
@@ -37,21 +35,11 @@ const CallbackRoute = CallbackRouteImport.update({
   path: '/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAuthenticatedRoute =
-  AuthenticatedAuthenticatedRouteImport.update({
-    id: '/authenticated',
-    path: '/authenticated',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,7 +47,6 @@ export interface FileRoutesByFullPath {
   '/doc': typeof DocRoute
   '/sign-out': typeof SignOutRoute
   '/spec': typeof SpecRoute
-  '/authenticated': typeof AuthenticatedAuthenticatedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -67,43 +54,25 @@ export interface FileRoutesByTo {
   '/doc': typeof DocRoute
   '/sign-out': typeof SignOutRoute
   '/spec': typeof SpecRoute
-  '/authenticated': typeof AuthenticatedAuthenticatedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/callback': typeof CallbackRoute
   '/doc': typeof DocRoute
   '/sign-out': typeof SignOutRoute
   '/spec': typeof SpecRoute
-  '/_authenticated/authenticated': typeof AuthenticatedAuthenticatedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/callback'
-    | '/doc'
-    | '/sign-out'
-    | '/spec'
-    | '/authenticated'
+  fullPaths: '/' | '/callback' | '/doc' | '/sign-out' | '/spec'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/callback' | '/doc' | '/sign-out' | '/spec' | '/authenticated'
-  id:
-    | '__root__'
-    | '/'
-    | '/_authenticated'
-    | '/callback'
-    | '/doc'
-    | '/sign-out'
-    | '/spec'
-    | '/_authenticated/authenticated'
+  to: '/' | '/callback' | '/doc' | '/sign-out' | '/spec'
+  id: '__root__' | '/' | '/callback' | '/doc' | '/sign-out' | '/spec'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   CallbackRoute: typeof CallbackRoute
   DocRoute: typeof DocRoute
   SignOutRoute: typeof SignOutRoute
@@ -140,13 +109,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -154,31 +116,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/authenticated': {
-      id: '/_authenticated/authenticated'
-      path: '/authenticated'
-      fullPath: '/authenticated'
-      preLoaderRoute: typeof AuthenticatedAuthenticatedRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedAuthenticatedRoute: typeof AuthenticatedAuthenticatedRoute
-}
-
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedAuthenticatedRoute: AuthenticatedAuthenticatedRoute,
-}
-
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   CallbackRoute: CallbackRoute,
   DocRoute: DocRoute,
   SignOutRoute: SignOutRoute,
