@@ -26,6 +26,7 @@ export function getRouter() {
   const router = routerWithQueryClient(
     createRouter({
       context: { convexQueryClient, queryClient },
+      defaultNotFoundComponent: () => <p>Not Found</p>,
       defaultPreload: "intent",
       routeTree,
       scrollRestoration: true,
