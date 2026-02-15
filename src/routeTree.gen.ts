@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SpecRouteImport } from './routes/spec'
 import { Route as SignOutRouteImport } from './routes/sign-out'
+import { Route as FormRouteImport } from './routes/form'
 import { Route as DocRouteImport } from './routes/doc'
 import { Route as CallbackRouteImport } from './routes/callback'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const SpecRoute = SpecRouteImport.update({
 const SignOutRoute = SignOutRouteImport.update({
   id: '/sign-out',
   path: '/sign-out',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormRoute = FormRouteImport.update({
+  id: '/form',
+  path: '/form',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocRoute = DocRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
   '/doc': typeof DocRoute
+  '/form': typeof FormRoute
   '/sign-out': typeof SignOutRoute
   '/spec': typeof SpecRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
   '/doc': typeof DocRoute
+  '/form': typeof FormRoute
   '/sign-out': typeof SignOutRoute
   '/spec': typeof SpecRoute
 }
@@ -60,21 +68,23 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
   '/doc': typeof DocRoute
+  '/form': typeof FormRoute
   '/sign-out': typeof SignOutRoute
   '/spec': typeof SpecRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/callback' | '/doc' | '/sign-out' | '/spec'
+  fullPaths: '/' | '/callback' | '/doc' | '/form' | '/sign-out' | '/spec'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/callback' | '/doc' | '/sign-out' | '/spec'
-  id: '__root__' | '/' | '/callback' | '/doc' | '/sign-out' | '/spec'
+  to: '/' | '/callback' | '/doc' | '/form' | '/sign-out' | '/spec'
+  id: '__root__' | '/' | '/callback' | '/doc' | '/form' | '/sign-out' | '/spec'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CallbackRoute: typeof CallbackRoute
   DocRoute: typeof DocRoute
+  FormRoute: typeof FormRoute
   SignOutRoute: typeof SignOutRoute
   SpecRoute: typeof SpecRoute
 }
@@ -93,6 +103,13 @@ declare module '@tanstack/react-router' {
       path: '/sign-out'
       fullPath: '/sign-out'
       preLoaderRoute: typeof SignOutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/form': {
+      id: '/form'
+      path: '/form'
+      fullPath: '/form'
+      preLoaderRoute: typeof FormRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/doc': {
@@ -123,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CallbackRoute: CallbackRoute,
   DocRoute: DocRoute,
+  FormRoute: FormRoute,
   SignOutRoute: SignOutRoute,
   SpecRoute: SpecRoute,
 }
