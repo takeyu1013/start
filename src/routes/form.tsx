@@ -1,3 +1,4 @@
+import { Button, Input } from "@heroui/react";
 import {
   createServerValidate,
   formOptions,
@@ -72,12 +73,11 @@ function Page() {
             const message = state.meta.errors.at(0)?.message;
             return (
               <div>
-                <input
-                  className="border"
+                <Input
                   name="text"
-                  onChange={(event) => handleChange(event.target.value)}
-                  value={state.value}
                   type="text"
+                  value={state.value}
+                  onChange={(e) => handleChange(e.target.value)}
                 />
                 {message && <p>{message}</p>}
               </div>
@@ -85,9 +85,11 @@ function Page() {
           }}
         </Field>
         <Subscribe>
-          {({ isSubmitting }) => {
-            return <input disabled={isSubmitting} type="submit" />;
-          }}
+          {({ isSubmitting }) => (
+            <Button type="submit" isDisabled={isSubmitting}>
+              Submit
+            </Button>
+          )}
         </Subscribe>
       </form>
     </main>
