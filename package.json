@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@convex-dev/react-query": "^0.1.0",
+    "@heroui/react": "^3.0.0-beta.7",
+    "@heroui/styles": "^3.0.0-beta.7",
     "@scalar/api-reference-react": "^0.8.62",
     "@tailwindcss/vite": "^4.2.0",
     "@tanstack/react-form": "^1.28.3",
